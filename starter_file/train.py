@@ -2,18 +2,17 @@ from sklearn.linear_model import LogisticRegression
 import argparse
 import os
 import numpy as np
-from sklearn.metrics import mean_squared_error
+from sklearn import metrics
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 from azureml.core.run import Run
-from azureml.data.dataset_factory import TabularDatasetFactory
 
 
-def clean_data(data):    
+def clean_data(df):    
     # Drop unused columns
-    x_df = data.to_pandas_dataframe().dropna()
+    x_df = df.dropna()
     x_df = x_df.drop(['CLIENTNUM', 'Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_1', 'Naive_Bayes_Classifier_Attrition_Flag_Card_Category_Contacts_Count_12_mon_Dependent_count_Education_Level_Months_Inactive_12_mon_2'], axis=1)
     
     # Clean and one hot encode data
@@ -44,13 +43,9 @@ def main():
     run.log('Max iterations: ', np.int(args.max_iter))
     
     df = pd.read_csv('./credit-card-bank-churn/credit_card_churn.csv')
-    key = "credit_card_churn"
-    description_text = "Credit Card Churn Prediction dataset for Machine Learning Engineer with Microsoft Azure"
-    datastore = Datastore.get(ws, 'workspaceblobstore')
-    dataset = Dataset.Tabular.register_pandas_dataframe(dataframe=df, target=datastore, name=key, description=description_text)
     
     # Clean dataset
-    x, y = clean_data(dataset)
+    x, y = clean_data(df)
     
     # Split data
     x_train, x_test, y_train, y_test = train_test_split(x, y)
@@ -61,4 +56,4 @@ def main():
     run.log('AUC', np.float(auc))
 
 if __name__ =='__main__':
-    main()s
+    main()
