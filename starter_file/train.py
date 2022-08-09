@@ -59,3 +59,6 @@ def main():
     y_pred_proba = model.predict_proba(x_test)[::,1]
     auc = metrics.roc_auc_score(y_test, y_pred_proba)
     run.log('AUC', np.float(auc))
+
+if __name__ =='__main__':
+    main()s
