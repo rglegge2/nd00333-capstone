@@ -28,21 +28,21 @@ For the AutoML configurations, I chose to set the `experiment_timeout_minutes` t
 
 ### Results
 The various types of models trained with AutoML included Logistic Regressions, XGBoostClassifiers, and RandomForests. While the scores were lower than the best model, it can be noted that all of them had performed reasonably well, only going as low as 0.88905727 for the AUC_weighted score, as shown in the screenshot of the RunDetails and the plot of the AUC_weighted scores below:
-![automl-run-details.png](automl-run-details.png)
-![automl-auc-weighted-plot.png](automl-auc-weighted-plot.png)
+![automl-run-details.png](/.github/images/automl-run-details.png)
+![automl-auc-weighted-plot.png](/.github/images/automl-auc-weighted-plot.png)
 
 The best model from this run was the VotingEnsemble (PreFittedSoftVotingClassifier) which had an AUC_weighted score of 0.99301462. The RunID and properties of the model can be found in the image below:
-![automl-best-model.png](automl-best-model.png)
+![automl-best-model.png](/.github/images/automl-best-model.png)
 
 The VotingEnsemble model is essentially a combination of several other models that were trained in other iterations of this run, such as those that I listed previously. The specific models that were used and their hyperparameters can be found in the above image.
 
 To answer the question of what features contribute most to customer attribution, the VotingEnsemble model found that `Total_Trans_Ct` was the most important feature, followed by `Total_Trans_Amt`, then `Total_Revolving_Bal`, as seen in the chart below:
-![automl-feature-importance.png](automl-feature-importance.png)
+![automl-feature-importance.png](/.github/images/automl-feature-importance.png)
 
 The graphs below show the individual feature importance for the top three features previously noted. Two fairly clear clusters are clear in each of the plots, where the left cluster is for the customers that are unlikely to be attrited while the right cluster is customers that are likely to be attrited. We can also see that in the plots for `Total_Trans_Ct` and `Total_Trans_Amt`, customers that have higher values for both are less likely to be attrited than those who have not had more than ~100 transactions or spent more than ~$10k total. There is not as clear of a pattern for the `Total_Revolving_Bal` feature, which explains why this feature was not ranked as highly as the other two.
-![feature-importance-1.png](feature-importance-1.png)
-![feature-importance-2.png](feature-importance-2.png)
-![feature-importance-.png](feature-importance-3.png)
+![feature-importance-1.png](/.github/images/feature-importance-1.png)
+![feature-importance-2.png](/.github/images/feature-importance-2.png)
+![feature-importance-.png](/.github/images/feature-importance-3.png)
 
 ## Hyperparameter Tuning
 I opted to use a simple LogisticRegression model for this experiment as it fit the problem of binary classification well. The hyperparameters that were tuned for the model were `C` and `max_iter`, which are the regularization strength and the maximum number of iterations, respectively.
@@ -53,23 +53,23 @@ For the termination policy, I used the BanditPolicy in order to terminate any ru
 
 ### Results
 The best model I got from hyperparameter tuning with HyperDrive had a value of 17.02299055359339 for `C` and 250 for `max_iter`, which resulted in a `AUC_weighted` score of 0.9157469751872698, as seen in the images below:
-![hyperdrive-run-details.png](hyperdrive-run-details.png)
-![hyperdrive-best-model.png](hyperdrive-best-model.png)
+![hyperdrive-run-details.png](/.github/images/hyperdrive-run-details.png)
+![hyperdrive-best-model.png](/.github/images/hyperdrive-best-model.png)
 
 While this was not as good as the performance that was seen with AutoML, the results were fairly acceptable. Over the 36 models trained, the lowest score was ~0.70161, which is significantly less performant than the worst AutoML model that was trained. It can also be noted that there is a greater range of values for `AUC_weighted` for this experiment than we previously saw with AutoML, as seen in the plot below (note that not all of the runs were shown here, so the lower AUC scores are not visible in this plot):
-![hyperdrive-auc-weighted-plot.png](hyperdrive-auc-weighted-plot.png)
+![hyperdrive-auc-weighted-plot.png](/.github/images/hyperdrive-auc-weighted-plot.png)
 
 It is also not entirely clear how the regularization strength and number of iterations factor into the performance of the model. Going with a higher or lower value for either will not definitively give a better model, so it ultimately comes down to trial and error to optimize the hyperparameters as best as possible without using grid search. The parallel coordinates plot below shows the relationship between the hyperparameters and the primary metric:
-![hyperdrive-auc-weighted-parallel-plot.png](hyperdrive-auc-weighted-parallel-plot.png)
+![hyperdrive-auc-weighted-parallel-plot.png](/.github/images/hyperdrive-auc-weighted-parallel-plot.png)
 
 In the future, I would improve the performance of this by running more models, expanding on the range of for each of the hyperparameter samples, and also consider trying other models as well. While 0.9157 is not a bad score, it can certainly be improved, and these adjustments could help achieve that improvement in performance.
 
 ## Model Deployment
 I deployed the best model from the AutoML run, the VotingEnsemble model, as seen in the image below:
-![automl-model-deployment.png](automl-model-deployment.png)
+![automl-model-deployment.png](/.github/images/automl-model-deployment.png)
 
 I was also able to test the endpoint successfully by sending a POST request to the `/score` endpoint for the model deployment with a sample input json within a list in a field with the key `data`. The `data` field takes a list because multiple documents can be scored with a single request. The model indicated that the customer represented by the sample request I submitted would have been classified as an `Existing Customer`. The request and response can be seen in the image below:
-![hyperdrive-sample-request.png](hyperdrive-sample-request.png)
+![hyperdrive-sample-request.png](/.github/images/hyperdrive-sample-request.png)
 
 ## Screen Recording
 The screencast for this project can be found here: https://streamable.com/rkqbbi
