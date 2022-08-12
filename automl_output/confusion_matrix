@@ -1,0 +1,1 @@
+{"schema_type": "confusion_matrix", "schema_version": "1.0.0", "data": {"class_labels": ["Attrited Customer", "Existing Customer"], "matrix": [[1437, 190], [97, 8403]]}}

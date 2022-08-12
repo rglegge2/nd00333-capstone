@@ -1,0 +1,132 @@
+{
+    "schema_name": "pipeline_graph",
+    "schema_version": "1.0.0",
+    "data": {
+        "module_nodes": {
+            "c020d939": {
+                "node_id": "c020d939",
+                "name": "prefittedsoftvotingclassifier",
+                "status": "model"
+            },
+            "659218f0": {
+                "node_id": "659218f0",
+                "name": "Categorical",
+                "status": "dataType"
+            },
+            "56d5d20a": {
+                "node_id": "56d5d20a",
+                "name": "StringCast-CharGramCountVectorizer",
+                "status": "operation"
+            },
+            "082a66cd": {
+                "node_id": "082a66cd",
+                "name": "ModeCatImputer-StringCast-LabelEncoder",
+                "status": "operation"
+            },
+            "2a94cc78": {
+                "node_id": "2a94cc78",
+                "name": "Numeric",
+                "status": "dataType"
+            },
+            "b1cec9f6": {
+                "node_id": "b1cec9f6",
+                "name": "MeanImputer",
+                "status": "operation"
+            },
+            "1af000ab": {
+                "node_id": "1af000ab",
+                "name": "MeanImputer-MaxAbsScaler-MiniBatchKMeans",
+                "status": "operation"
+            }
+        },
+        "edges": [
+            {
+                "source_node_id": "b59ea714",
+                "source_node_name": "data_source",
+                "source_name": "",
+                "target_name": "11 col",
+                "dst_node_id": "659218f0",
+                "dst_node_name": "Categorical"
+            },
+            {
+                "source_node_id": "659218f0",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "56d5d20a",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "56d5d20a",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "7 col",
+                "dst_node_id": "c020d939",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "659218f0",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "082a66cd",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "082a66cd",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "7 col",
+                "dst_node_id": "c020d939",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "b59ea714",
+                "source_node_name": "data_source",
+                "source_name": "",
+                "target_name": "9 col",
+                "dst_node_id": "2a94cc78",
+                "dst_node_name": "Numeric"
+            },
+            {
+                "source_node_id": "2a94cc78",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "b1cec9f6",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "b1cec9f6",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "0 col",
+                "dst_node_id": "c020d939",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "2a94cc78",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "",
+                "dst_node_id": "1af000ab",
+                "dst_node_name": ""
+            },
+            {
+                "source_node_id": "1af000ab",
+                "source_node_name": "",
+                "source_name": "",
+                "target_name": "0 col",
+                "dst_node_id": "c020d939",
+                "dst_node_name": ""
+            }
+        ],
+        "child_runs": [],
+        "datasource_nodes": {
+            "b59ea714": {
+                "node_id": "b59ea714",
+                "name": "data_source - 20 col"
+            }
+        }
+    }
+}
