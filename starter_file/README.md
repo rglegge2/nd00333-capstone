@@ -28,6 +28,7 @@ For the AutoML configurations, I chose to set the `experiment_timeout_minutes` t
 
 ### Results
 The various types of models trained with AutoML included Logistic Regressions, XGBoostClassifiers, and RandomForests. While the scores were lower than the best model, it can be noted that all of them had performed reasonably well, only going as low as 0.88905727 for the AUC_weighted score, as shown in the screenshot of the RunDetails and the plot of the AUC_weighted scores below:
+![img.png](/.github/images/automl-run-details-in-progress.png)
 ![automl-run-details.png](/.github/images/automl-run-details.png)
 ![automl-auc-weighted-plot.png](/.github/images/automl-auc-weighted-plot.png)
 
